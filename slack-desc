@@ -1,0 +1,11 @@
+libproxy: libproxy (A library handling all the details of proxy configuration)
+libproxy:
+libproxy: libproxy exists to answer the question: Given a network resource,
+libproxy: how do I reach it? It handles all the details or proxy
+libproxy: configuration for network enabled applications.
+libproxy: The library has extremely small footprint, no external core
+libproxy: dependencies, stable API with small number of functions.
+libproxy: The library provides dynamic adjustment to changing network
+libproxy: topology, a standard way of dealing with proxy settings across all
+libproxy: scenarios and a sublime sense of joy and accomplishment.
+libproxy: Packaged by Georgi D. Sotirov <gdsotirov@dir.bg>
