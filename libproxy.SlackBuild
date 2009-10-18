@@ -5,10 +5,10 @@
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
 
-. /etc/slack-package.conf
+. ../slack-package.conf
 
 NAME=libproxy
-VERSION=0.2.3
+VERSION=0.3.1
 BUILD=1
 ARCH=${ARCH:-i486}
 
@@ -34,7 +34,7 @@ mkdir -p $PKG
 
 # Extract the sources
 cd $TMP
-tar -zxvf $CWD/$NAME-$VERSION.tar.gz || exit 1
+tar -jxvf $CWD/$NAME-$VERSION.tar.bz2 || exit 1
 cd $SRC
 fix_source
 
@@ -47,14 +47,16 @@ CXXFLAGS=$SLKCFLAGS \
             --mandir=/usr/man \
             --enable-shared=yes \
             --enable-static=no \
+            --with-direct \
             --with-envvar \
             --with-file \
-            --with-kde \
-            --with-python || exit 2 
-#           --with-gnome \
-#           --with-webkit \
-#           --with-mozjs \
-#           --with-networkmanager
+            --without-gnome \
+            --with-kde4 \
+            --with-wpad \
+            --with-mozjs \
+            --with-python || exit 2
+#           --with-java   # not yet availiable
+#           --with-dotnet # doesn't build
 
 make -j4 || exit 3
 make DESTDIR=$PKG install || exit 4
