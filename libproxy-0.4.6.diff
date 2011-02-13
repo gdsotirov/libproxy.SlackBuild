@@ -1,6 +1,6 @@
-diff -N -r -U 3 libproxy-0.4.4-orig/libproxy/cmake/modules.cmk libproxy-0.4.4/libproxy/cmake/modules.cmk
---- libproxy-0.4.4-orig/libproxy/cmake/modules.cmk	2010-06-13 18:07:48.000000000 +0300
-+++ libproxy-0.4.4/libproxy/cmake/modules.cmk	2010-08-14 17:31:44.000000000 +0300
+diff -urNad libproxy-0.4.6-orig/libproxy/cmake/modules.cmk libproxy-0.4.6/libproxy/cmake/modules.cmk
+--- libproxy-0.4.6-orig/libproxy/cmake/modules.cmk	2010-09-01 23:23:34.000000000 +0300
++++ libproxy-0.4.6/libproxy/cmake/modules.cmk	2011-02-13 20:41:13.000000000 +0200
 @@ -35,7 +35,7 @@
  px_module(ignore_hostname          1                 1)
  px_module(ignore_ip                1                 1)
