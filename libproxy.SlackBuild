@@ -19,13 +19,13 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: libproxy.SlackBuild,v 1.4 2011/02/13 18:44:58 gsotirov Exp $
+# $Id: libproxy.SlackBuild,v 1.5 2011/12/27 22:03:47 gsotirov Exp $
 #
 
-. ../slack-package.conf
+. ../../slack-package.conf
 
 NAME=libproxy
-VERSION=0.4.6
+VERSION=0.4.7
 BUILD=${BUILD:-1}
 ARCH=${ARCH:-i486}
 
@@ -51,7 +51,7 @@ mkdir -p $PKG
 
 # Extract the sources
 cd $TMP
-tar -xvf $CWD/$NAME-$VERSION.tar.gz || exit 1
+tar -xvf $CWD/$NAME-$VERSION.tar.gz || exit 3
 cd $SRC
 fix_source
 
@@ -60,10 +60,14 @@ fix_source
 patch -p1 < $CWD/$NAME-$VERSION.diff
 
 # Configure
-cmake -DCMAKE_C_FLAGS="$SLKCFLAGS" \
+cmake -LAH \
+      -DCMAKE_C_FLAGS="$SLKCFLAGS" \
       -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_MODULE_PATH=/usr/share/cmake/Modules \
+      -DFORCE_SYSTEM_LIBMODMAN=yes \
       -DCMAKE_INSTALL_PREFIX=/usr \
+      -DWITH_DOTNET=yes \
       -DWITH_GNOME=yes \
       -DWITH_KDE4=yes \
       -DWITH_MOZJS=yes \
@@ -71,16 +75,17 @@ cmake -DCMAKE_C_FLAGS="$SLKCFLAGS" \
       -DWITH_PERL=yes \
       -DWITH_PYTHON=yes \
       -DWITH_VALA=yes \
-      -DPERL_VENDORINSTALL=yes || exit 2
+      -DPERL_VENDORINSTALL=yes || exit 4
 
-make -j4 || exit 3
-make DESTDIR=$PKG install || exit 4
+# Build & install
+make VERBOSE=1 -j4 || exit 5
+make DESTDIR=$PKG install || exit 6
 
+# Prepare
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
 ( cd $SRC; create_docs $PKG $NAME-$VERSION )
 
-# Copy service info
 install -m 755 -d $PKG/install
 install -m 644 $CWD/slack-desc     $PKG/install/slack-desc
 install -m 644 $CWD/slack-required $PKG/install/slack-required
@@ -94,6 +99,7 @@ install -m 644 $CWD/slack-suggests      $SBDIR/slack-suggests
 install -m 644 $CWD/$NAME-$VERSION.diff $SBDIR/$NAME-$VERSION.diff
 install -m 644 $CWD/$NAME.SlackBuild    $SBDIR/$NAME.SlackBuild
 
+# Assemble
 PKGNAME=$NAME-$VERSION-$ARCH-$BUILD$MYIN
 cd $PKG
 makepkg -l y -c n $PKG_DIR/$PKGNAME.txz
