@@ -19,7 +19,7 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: libproxy.SlackBuild,v 1.5 2011/12/27 22:03:47 gsotirov Exp $
+# $Id: libproxy.SlackBuild,v 1.6 2012/01/22 21:04:22 gsotirov Exp $
 #
 
 . ../../slack-package.conf
@@ -68,7 +68,7 @@ cmake -LAH \
       -DFORCE_SYSTEM_LIBMODMAN=yes \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DWITH_DOTNET=yes \
-      -DWITH_GNOME=yes \
+      -DWITH_GNOME3=no \
       -DWITH_KDE4=yes \
       -DWITH_MOZJS=yes \
       -DWITH_NM=yes \
