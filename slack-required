@@ -1,6 +1,4 @@
-cxxlibs >= 6.0.13 | gcc-g++ >= 4.4.4
-gcc >= 4.4.4
-glibc >= 2.11.1
-glibc-solibs >= 2.11.1
+cxxlibs >= 6.0.14 | gcc-g++ >= 4.5.2
+gcc >= 4.5.2
+glibc-solibs >= 2.13
 libmodman >= 2.0
-seamonkey >= 2.0.14
