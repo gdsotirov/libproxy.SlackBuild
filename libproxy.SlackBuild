@@ -19,7 +19,7 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: libproxy.SlackBuild,v 1.7 2016/08/23 16:24:59 gsotirov Exp $
+# $Id: libproxy.SlackBuild,v 1.8 2016/08/30 12:54:13 gsotirov Exp $
 #
 
 . ../../slack-package.conf
@@ -67,6 +67,8 @@ cmake -LAH \
       -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_MODULE_PATH=/usr/share/cmake/Modules \
+      -DLIB_INSTALL_DIR=/usr/lib${LIBDIRSUFFIX} \
+      -DMODULE_INSTALL_DIR=/usr/lib${LIBDIRSUFFIX}/libproxy/${VERSION}/modules \
       -DFORCE_SYSTEM_LIBMODMAN=yes \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DWITH_DOTNET=yes \
