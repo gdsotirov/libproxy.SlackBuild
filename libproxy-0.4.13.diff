@@ -1,0 +1,95 @@
+# Patch to detect and use MCS instead of GMCS
+# Copyright (C) 2016 Georgi D. Sotirov <gdsotirov@dir.bg>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+# Visit SlackPack at http://sotirov-bg.net/slackpack/
+#
+# $Id: libproxy-0.4.13.diff,v 1.1 2016/09/01 20:17:27 gsotirov Exp $
+#
+diff -urNad libproxy-0.4.13-orig/cmake/CMakeDetermineCSharpCompiler.cmake libproxy-0.4.13/cmake/CMakeDetermineCSharpCompiler.cmake
+--- libproxy-0.4.13-orig/cmake/CMakeDetermineCSharpCompiler.cmake	2016-04-28 20:04:41.000000000 +0300
++++ libproxy-0.4.13/cmake/CMakeDetermineCSharpCompiler.cmake	2016-09-01 23:05:45.000000000 +0300
+@@ -33,7 +33,7 @@
+     # if no compiler has been specified yet, then look for one
+     if (NOT CMAKE_CSharp_COMPILER)
+         find_package(Mono)
+-        set (CMAKE_CSharp_COMPILER "${GMCS_EXECUTABLE}")
++        set (CMAKE_CSharp_COMPILER "${MCS_EXECUTABLE}")
+ 
+         # still not found, try csc.exe
+         if (NOT CMAKE_CSharp_COMPILER)
+diff -urNad libproxy-0.4.13-orig/cmake/FindMono.cmake libproxy-0.4.13/cmake/FindMono.cmake
+--- libproxy-0.4.13-orig/cmake/FindMono.cmake	2016-04-28 20:04:41.000000000 +0300
++++ libproxy-0.4.13/cmake/FindMono.cmake	2016-09-01 22:47:10.000000000 +0300
+@@ -1,10 +1,10 @@
+-# - Try to find the mono, mcs, gmcs and gacutil
++# - Try to find the mono, mcs and gacutil
+ #
+ # defines
+ #
+-# MONO_FOUND - system has mono, mcs, gmcs and gacutil
++# MONO_FOUND - system has mono, mcs and gacutil
+ # MONO_PATH - where to find 'mono'
+-# GMCS_PATH - where to find 'gmcs'
++# MCS_PATH - where to find 'mcs'
+ # GACUTIL_PATH - where to find 'gacutil'
+ #
+ # copyright (c) 2007 Arno Rehn arno@arnorehn.de
+@@ -12,26 +12,26 @@
+ # Redistribution and use is allowed according to the terms of the GPL license.
+ 
+ FIND_PROGRAM (MONO_EXECUTABLE mono)
+-FIND_PROGRAM (GMCS_EXECUTABLE gmcs)
++FIND_PROGRAM (MCS_EXECUTABLE mcs)
+ FIND_PROGRAM (GACUTIL_EXECUTABLE gacutil)
+ 
+ SET (MONO_FOUND FALSE CACHE INTERNAL "")
+ 
+-IF (MONO_EXECUTABLE AND GMCS_EXECUTABLE AND GACUTIL_EXECUTABLE)
++IF (MONO_EXECUTABLE AND MCS_EXECUTABLE AND GACUTIL_EXECUTABLE)
+ 	SET (MONO_FOUND TRUE CACHE INTERNAL "")
+-ENDIF (MONO_EXECUTABLE AND GMCS_EXECUTABLE AND GACUTIL_EXECUTABLE)
++ENDIF (MONO_EXECUTABLE AND MCS_EXECUTABLE AND GACUTIL_EXECUTABLE)
+ 
+ IF (NOT Mono_FIND_QUIETLY)
+     MESSAGE(STATUS "Path of mono: ${MONO_EXECUTABLE}")
+-    MESSAGE(STATUS "Path of gmcs: ${GMCS_EXECUTABLE}")
++    MESSAGE(STATUS "Path of mcs: ${MCS_EXECUTABLE}")
+     MESSAGE(STATUS "Path of gacutil: ${GACUTIL_EXECUTABLE}")
+ ENDIF (NOT Mono_FIND_QUIETLY)
+ 
+ IF (NOT MONO_FOUND)
+ 	IF (Mono_FIND_REQUIRED)
+-		MESSAGE(FATAL_ERROR "Could not find one or more of the following programs: mono, gmcs, gacutil")
++		MESSAGE(FATAL_ERROR "Could not find one or more of the following programs: mono, mcs, gacutil")
+ 	ENDIF (Mono_FIND_REQUIRED)
+ ENDIF (NOT MONO_FOUND)
+ 
+-MARK_AS_ADVANCED(MONO_EXECUTABLE GMCS_EXECUTABLE GACUTIL_EXECUTABLE)
++MARK_AS_ADVANCED(MONO_EXECUTABLE MCS_EXECUTABLE GACUTIL_EXECUTABLE)
+ 
+diff -urNad libproxy-0.4.13-orig/samples/dotnet/Makefile libproxy-0.4.13/samples/dotnet/Makefile
+--- libproxy-0.4.13-orig/samples/dotnet/Makefile	2016-04-28 20:04:41.000000000 +0300
++++ libproxy-0.4.13/samples/dotnet/Makefile	2016-09-01 22:47:30.000000000 +0300
+@@ -2,7 +2,7 @@
+ all: proxy.exe
+ 
+ proxy.exe: proxy.cs
+-	gmcs -pkg:libproxy-sharp-1.0 proxy.cs
++	mcs -pkg:libproxy-sharp-1.0 proxy.cs
+ 
+ clean:
+ 	rm proxy.exe
