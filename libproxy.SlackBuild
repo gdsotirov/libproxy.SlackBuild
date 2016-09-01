@@ -19,13 +19,13 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: libproxy.SlackBuild,v 1.10 2016/09/01 19:20:46 gsotirov Exp $
+# $Id: libproxy.SlackBuild,v 1.11 2016/09/01 20:17:44 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=libproxy
-VERSION=0.4.12
+VERSION=0.4.13
 ARCH=${ARCH:-i486}
 BUILD=${BUILD:-1}
 
