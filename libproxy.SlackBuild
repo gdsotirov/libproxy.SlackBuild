@@ -23,7 +23,7 @@
 . ../../slack-package.conf
 
 NAME=libproxy
-VERSION=0.4.16
+VERSION=0.4.17
 ARCH=${ARCH:-i586}
 BUILD=${BUILD:-1}
 
